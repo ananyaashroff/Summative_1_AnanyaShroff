@@ -1,0 +1,63 @@
+from machine import Pin, PWM
+import time
+
+eye1 = PWM (Pin(18), Pin.OUT)
+eye2 = PWM (Pin(19), Pin.OUT)
+eye1.freq(1000)
+eye2.freq(1000)
+pb = Pin(21, Pin.IN, Pin.PULL_UP)
+ir = Pin(15, Pin.IN, Pin.PULL_UP)
+sm = PWM (Pin (22), Pin.OUT)
+sm.freq(50)
+
+eye1.duty(0)
+eye2.duty(0)
+while True:
+    pb_val = pb.value()
+    print('start game')
+    time.sleep(0.01)
+    
+    if pb_val == 0:
+        print('game on')
+        while True:
+            ir_val = ir.value()
+            print(ir_val)
+            time.sleep_ms(10)
+             
+#            for i in range(0,20):
+#                 eye1.duty(i)
+#                 eye2.duty(i)
+#                 time.sleep(0.3)
+#                 
+#            for p in range(20, 0, -1):
+#                 eye1.duty(p)
+#                 eye2.duty(p)
+#                 time.sleep(0.02)
+                
+             
+             
+            if ir_val == 0:
+                print('chor! chor!')
+                for l in range(5):
+                    eye1.duty(1023)
+                    eye2.duty(1023)
+                    time.sleep(0.01)
+                    eye1.duty(0)
+                    eye2.duty(0)
+                    time.sleep(0.01)
+                     
+                for s in range(0,180):
+                    sm.duty(s)
+                    print(s)
+                    time.sleep(0.001)
+                     
+                break
+                eye1.duty(0)
+                eye2.duty(0)
+                sm.duty(0)
+                print('game over')
+            
+                
+                
+                
+        
